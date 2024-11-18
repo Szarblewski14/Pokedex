@@ -1,10 +1,10 @@
-let pokeContainer = document.querySelector('#pokecontainer')
+const pokeContainer = document.querySelector('#pokecontainer')
 
 //ADICIONANDO POKEMONS 
-let pokemonCount = 250
+const pokemonCount = 150
 
 //Lista de cores
-let color = {
+const colors = {
     fire: '#FDDFDF',
     grass: '#DEFDE0',
     electric: '#FCF7DE',
@@ -21,44 +21,43 @@ let color = {
     normal: '#F5F5F5'
 }
 
-let mainTypes = Object.keys(color);
+const mainTypes = Object.keys(colors);
 
 //percorrendo todos os pokemons 
 
-let fetchPokemons = async () => {
+const fetchPokemons = async () => {
     for (let i = 1; i <= pokemonCount; i++) {
         await getPokemons(i)
     }
 }
 
-let getPokemons = async (id) => {
+const getPokemons = async (id) => {
     
-    let url = `https://pokeapi.co/api/v2/pokemon/${id}`
-    let resp = await fetch(url)
-    let data =  await resp.json()   
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`
+    const resp = await fetch(url)
+    const data =  await resp.json()   
     CreatePokemonCard(data)
 }
 
 //Criando cards dinamicamente
 
-let CreatePokemonCard = (poke) => {
-    let card = document.createElement('div')
+const CreatePokemonCard = (poke) => {
+    const card = document.createElement('div')
     card.classList.add('pokemon')
 
-    let name = poke.name[0].toUpperCase() + poke.name.slice(1)
-    let id = poke.id.toString().padStart(3, '0')
+    const name = poke.name[0].toUpperCase() + poke.name.slice(1)
+    const id = poke.id.toString().padStart(3, '0')
 
-    let pokeTypes = poke.types.map(type => type.name)
-    let type = main.types.find(type => pokeTypes.indexOf(type) > -1)
-    let color = color[type]
+    const pokeTypes = poke.types.map(type => type.name)
+    const type = mainTypes.find(type => pokeTypes.indexOf(type) > -1)
+    const color = colors[type]
 
     card.style.backgroundColor = color
 
-    let pokemonInnerHtml = `
+    const pokemonInnerHtml = `
          <div class="imageContainer">
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${poke.id}.png" alt="${name}">
             </div>
-
             <div class="info">
                 <span class="number">#${id}</span>
                 <h3 class="name">${name}</h3>
@@ -67,7 +66,6 @@ let CreatePokemonCard = (poke) => {
     `
 
     card.innerHTML = pokemonInnerHtml
-
     pokeContainer.appendChild(card)
 }
 
